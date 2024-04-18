@@ -57,6 +57,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Support
 
-If you encounter any issues or have any questions, please feel free to open an issue on GitHub or contact us at admin@logic-leap.net.
+If you encounter any issues or have any questions, please feel free to open an issue on GitHub or contact me at admin@logic-leap.net.
 
-Enjoy using CryptoSuite! We hope it makes your cryptography tasks easier and more enjoyable.
+Enjoy using CryptoSuite! I hope it makes your cryptography tasks easier and more enjoyable.
