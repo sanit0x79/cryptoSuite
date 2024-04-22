@@ -31,6 +31,9 @@ class newTopLevelWindow(customtkinter.CTkToplevel):
         super().__init__(master)
         self.geometry("1000x500")
         self.title(title)
+        self.iconbitmap("features/media/logicleap_transparent.ico")
+        self.grid_rowconfigure((5,0), weight=1)
+
 
         self.content = customtkinter.CTkLabel(self, text=content)
         self.content.grid(row=0, column=0)
@@ -41,8 +44,9 @@ class userInterface(customtkinter.CTk):
 
         self.title("CryptoSuite")
         self.geometry("1000x500")
-        self.grid_rowconfigure((5,0), weight=0)
-        self.grid_columnconfigure((5, 0), weight=0)
+        self.grid_rowconfigure((1,0), weight=0)
+        self.grid_columnconfigure((1, 0), weight=0)
+        self.iconbitmap("features/media/logicleap_transparent.ico")
 
         self.buttonFrame = buttonFrame(self, title="Features")
         self.buttonFrame.grid(row=0, column=0, padx=0, pady=0)
@@ -52,6 +56,7 @@ class userInterface(customtkinter.CTk):
             self.frequencyWindow.focus()
         else:
             self.frequencyWindow = newTopLevelWindow(self, "Frequency Analysis", "Frequency Analysis Content")
+            self.iconbitmap("features/media/logicleap_transparent.ico")
 
             self.cipherTextBox = customtkinter.CTkTextbox(self.frequencyWindow, width=200, height=350)
             self.cipherTextBox.insert("0.0", "Enter Ciphertext Here")
@@ -72,23 +77,26 @@ class userInterface(customtkinter.CTk):
         formatted_output = "Frequency Analysis:\n"
         for char, (count, percentage) in frequencies.items():
             formatted_output += f"'{char}' appears {count} times, which is {percentage:.2f}% of the total\n"
-        self.plaintext_text.insert("1.0", formatted_output)
+        self.plainTextBox.insert("1.0", formatted_output)
 
     def clearTextBox(self):
-        self.plaintext_text.delete("1.0", "end")
+        self.plainTextBox.delete("1.0", "end")
         self.cipherTextBox.delete("1.0", "end")
-
+        self.publicKeyTextBox.delete("1.0", "end")
+        self.privateKeyTextBox.delete("1.0", "end")
+        
     def openRSAEncryptionWindow(self):
         if hasattr(self, "rsaWindow") and self.rsaWindow.winfo_exists():
             self.rsaWindow.focus()
         else:
             self.rsaWindow = newTopLevelWindow(self, "RSA Encryption", "RSA Content")
+            self.iconbitmap("features/media/logicleap_transparent.ico")
 
             self.cipherTextBox = customtkinter.CTkTextbox(self.rsaWindow, width=200, height=350)
             self.cipherTextBox.insert("0.0", "Enter Ciphertext Here")
             self.cipherTextBox.grid(row=0,column=20)
 
-            self.analyzeButton = customtkinter.CTkButton(self.rsaWindow, text="Analyze", command=self.doRSAEncryption)
+            self.analyzeButton = customtkinter.CTkButton(self.rsaWindow, text="Encrypt", command=self.doRSAEncryption)
             self.analyzeButton.grid(row=10,column=20)
 
             self.clearButton = customtkinter.CTkButton(self.rsaWindow, text="Clear", command=self.clearTextBox)
@@ -96,6 +104,15 @@ class userInterface(customtkinter.CTk):
 
             self.plainTextBox = customtkinter.CTkTextbox(self.rsaWindow, width=200, height=350)
             self.plainTextBox.grid(row=0, column=30, padx=5)
+
+            self.publicKeyTextBox = customtkinter.CTkTextbox(self.rsaWindow, width=200, height=175)
+            self.publicKeyTextBox.insert("0.0", "Enter your public key here")
+            self.publicKeyTextBox.grid(row=0, column=40, pady=(0,0), sticky="ew", columnspan=2)
+
+            self.privateKeyTextBox = customtkinter.CTkTextbox(self.rsaWindow, width=200, height=175)
+            self.privateKeyTextBox.insert("0.0", "Enter your private key here")
+            self.privateKeyTextBox.grid(row=1, column=40, pady=(0,0), sticky="ew", columnspan=2)
+
 
     def doRSAEncryption(self):
         print("Working")
@@ -105,6 +122,7 @@ class userInterface(customtkinter.CTk):
             self.aesWindow.focus()
         else:
             self.aesWindow = newTopLevelWindow(self, "AES Encryption", "AES Content")
+            self.iconbitmap("features/media/logicleap_transparent.ico")
 
     def openPlaceholder4Window(self):
         if hasattr(self, "ph4_window") and self.aes_window.winfo_exists():
