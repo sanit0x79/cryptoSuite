@@ -55,6 +55,10 @@ We welcome contributions! If you have ideas for new features or improvements, pl
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
+## Disclaimer
+Do NOT use the encryption methods for any protecting of data, just use it for educational purposes.
+I am NOT liable for any loss of data or any data landing in the wrong hands.
+
 ## Support
 
 If you encounter any issues or have any questions, please feel free to open an issue on GitHub or contact me at admin@logic-leap.net.
