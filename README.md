@@ -44,7 +44,7 @@ pip install -r requirements.txt
 To start using CryptoSuite, run the following command:
 
 ```bash
-python cryptosuite.py
+python3 cryptosuite.py
 ```
 
 This will launch the CryptoSuite application, where you can select the desired tool from the menu and follow the on-screen instructions.
