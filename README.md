@@ -39,6 +39,19 @@ cd cryptosuite
 ```bash
 pip install -r requirements.txt
 ```
+4. For Debian/Ubuntu-based systems:
+```bash
+sudo apt install python3-tk
+```
+5. For Fedora:
+```bash
+sudo dnf install python3-tkinter
+```
+6. For Arch based distros:
+```bash
+sudo pacman -S tk
+```
+
 ## Usage
 
 To start using CryptoSuite, run the following command:
