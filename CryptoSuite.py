@@ -78,15 +78,15 @@ class userInterface(customtkinter.CTk):
 
     def doFrequencyAnalysis(self):
         ciphertext = self.cipherTextBox.get("1.0", "end-1c")
-        frequency_count = {}
+        frequencyCount = {}
         for char in ciphertext:
-            frequency_count[char] = frequency_count.get(char, 0) + 1
-        total = sum(frequency_count.values())
-        formatted_output = "Frequency Analysis:\n"
-        for char, count in sorted(frequency_count.items(), key=lambda x: -x[1]):
-            formatted_output += f"'{char}': {count} times, {count/total:.2%}\n"
+            frequencyCount[char] = frequencyCount.get(char, 0) + 1
+        total = sum(frequencyCount.values())
+        formattedOutput = "Frequency Analysis:\n"
+        for char, count in sorted(frequencyCount.items(), key=lambda x: -x[1]):
+            formattedOutput += f"'{char}': {count} times, {count/total:.2%}\n"
         self.plainTextBox.delete("1.0", "end")
-        self.plainTextBox.insert("1.0", formatted_output)
+        self.plainTextBox.insert("1.0", formattedOutput)
 
     def openRSAEncryptionWindow(self):
         content = (
@@ -120,26 +120,26 @@ class userInterface(customtkinter.CTk):
     def doRSAEncryption(self):
         try:
             message = self.messageTextBox.get("1.0", "end-1c").encode()
-            public_key_data = self.publicKeyTextBox.get("1.0", "end-1c").strip()
-            public_key = RSA.import_key(public_key_data)
-            cipher = PKCS1_OAEP.new(public_key)
-            encrypted_message = cipher.encrypt(message)
-            encoded_message = b64encode(encrypted_message).decode()
+            publicKeyData = self.publicKeyTextBox.get("1.0", "end-1c").strip()
+            publicKey = RSA.import_key(publicKeyData)
+            cipher = PKCS1_OAEP.new(publicKey)
+            encryptedMessage = cipher.encrypt(message)
+            encodedMessage = b64encode(encryptedMessage).decode()
             self.resultTextBox.delete("1.0", "end")
-            self.resultTextBox.insert("1.0", encoded_message)
+            self.resultTextBox.insert("1.0", encodedMessage)
         except Exception as e:
             self.resultTextBox.delete("1.0", "end")
             self.resultTextBox.insert("1.0", f"Error: {str(e)}")
 
     def doRSADecryption(self):
         try:
-            encrypted_message = self.messageTextBox.get("1.0", "end-1c")
-            private_key_data = self.privateKeyTextBox.get("1.0", "end-1c").strip()
-            private_key = RSA.import_key(private_key_data)
-            cipher = PKCS1_OAEP.new(private_key)
-            decrypted_message = cipher.decrypt(b64decode(encrypted_message))
+            encryptedMessage = self.messageTextBox.get("1.0", "end-1c")
+            privateKeyData = self.privateKeyTextBox.get("1.0", "end-1c").strip()
+            privateKey = RSA.import_key(privateKeyData)
+            cipher = PKCS1_OAEP.new(privateKey)
+            decryptedMessage = cipher.decrypt(b64decode(encryptedMessage))
             self.resultTextBox.delete("1.0", "end")
-            self.resultTextBox.insert("1.0", decrypted_message.decode())
+            self.resultTextBox.insert("1.0", decryptedMessage.decode())
         except Exception as e:
             self.resultTextBox.delete("1.0", "end")
             self.resultTextBox.insert("1.0", f"Error: {str(e)}")
@@ -176,22 +176,22 @@ class userInterface(customtkinter.CTk):
                 raise ValueError("AES key must be 16, 24, or 32 bytes long.")
             cipher = AES.new(key, AES.MODE_CBC)
             ciphertext = cipher.encrypt(pad(message, AES.block_size))
-            encoded_cipher = b64encode(cipher.iv + ciphertext).decode()
+            encodedCipher = b64encode(cipher.iv + ciphertext).decode()
             self.resultTextBox.delete("1.0", "end")
-            self.resultTextBox.insert("1.0", encoded_cipher)
+            self.resultTextBox.insert("1.0", encodedCipher)
         except Exception as e:
             self.resultTextBox.delete("1.0", "end")
             self.resultTextBox.insert("1.0", f"Error: {str(e)}")
 
     def doAESDecryption(self):
         try:
-            encrypted_message = self.messageTextBox.get("1.0", "end-1c")
+            encryptedMessage = self.messageTextBox.get("1.0", "end-1c")
             key = self.keyTextBox.get("1.0", "end-1c").encode()
             if len(key) not in [16, 24, 32]:
                 raise ValueError("AES key must be 16, 24, or 32 bytes long.")
-            encrypted_data = b64decode(encrypted_message)
-            iv = encrypted_data[:16]
-            ciphertext = encrypted_data[16:]
+            encryptedData = b64decode(encryptedMessage)
+            iv = encryptedData[:16]
+            ciphertext = encryptedData[16:]
             cipher = AES.new(key, AES.MODE_CBC, iv)
             plaintext = unpad(cipher.decrypt(ciphertext), AES.block_size)
             self.resultTextBox.delete("1.0", "end")
@@ -229,15 +229,15 @@ class userInterface(customtkinter.CTk):
             message = self.messageTextBox.get("1.0", "end-1c").encode()
             algorithm = self.hashAlgorithm.get()
             if algorithm == "SHA-256":
-                hash_obj = SHA256.new(message)
+                hashObj = SHA256.new(message)
             elif algorithm == "SHA-512":
-                hash_obj = SHA512.new(message)
+                hashObj = SHA512.new(message)
             elif algorithm == "MD5":
-                hash_obj = MD5.new(message)
+                hashObj = MD5.new(message)
             else:
                 raise ValueError("Invalid hashing algorithm selected.")
             self.resultTextBox.delete("1.0", "end")
-            self.resultTextBox.insert("1.0", hash_obj.hexdigest())
+            self.resultTextBox.insert("1.0", hashObj.hexdigest())
         except Exception as e:
             if hasattr(self, 'resultTextBox') and self.resultTextBox.winfo_exists():
                 self.resultTextBox.delete("1.0", "end")
@@ -267,16 +267,16 @@ class userInterface(customtkinter.CTk):
 
     def doBase64Encoding(self):
         message = self.messageTextBox.get("1.0", "end-1c").encode()
-        encoded_message = b64encode(message).decode()
+        encodedMessage = b64encode(message).decode()
         self.resultTextBox.delete("1.0", "end")
-        self.resultTextBox.insert("1.0", encoded_message)
+        self.resultTextBox.insert("1.0", encodedMessage)
 
     def doBase64Decoding(self):
-        encoded_message = self.messageTextBox.get("1.0", "end-1c")
+        encodedMessage = self.messageTextBox.get("1.0", "end-1c")
         try:
-            decoded_message = b64decode(encoded_message).decode()
+            decodedMessage = b64decode(encodedMessage).decode()
             self.resultTextBox.delete("1.0", "end")
-            self.resultTextBox.insert("1.0", decoded_message)
+            self.resultTextBox.insert("1.0", decodedMessage)
         except Exception as e:
             self.resultTextBox.delete("1.0", "end")
             self.resultTextBox.insert("1.0", f"Error: {str(e)}")
@@ -319,10 +319,10 @@ class userInterface(customtkinter.CTk):
             if size < 2048:
                 raise ValueError("RSA key size should be at least 2048 bits.")
             key = RSA.generate(size)
-            private_key = key.export_key()
-            public_key = key.publickey().export_key()
+            privateKey = key.export_key()
+            publicKey = key.publickey().export_key()
             self.resultTextBox.delete("1.0", "end")
-            self.resultTextBox.insert("1.0", f"Private Key:\n{private_key.decode()}\n\nPublic Key:\n{public_key.decode()}")
+            self.resultTextBox.insert("1.0", f"Private Key:\n{privateKey.decode()}\n\nPublic Key:\n{publicKey.decode()}")
         except Exception as e:
             self.resultTextBox.delete("1.0", "end")
             self.resultTextBox.insert("1.0", f"Error: {str(e)}")
@@ -349,15 +349,15 @@ class userInterface(customtkinter.CTk):
 
     def convertToHex(self):
         message = self.messageTextBox.get("1.0", "end-1c")
-        hex_output = message.encode().hex()
+        hexOutput = message.encode().hex()
         self.resultTextBox.delete("1.0", "end")
-        self.resultTextBox.insert("1.0", hex_output)
+        self.resultTextBox.insert("1.0", hexOutput)
 
     def convertToBinary(self):
         message = self.messageTextBox.get("1.0", "end-1c")
-        binary_output = ' '.join(format(ord(char), '08b') for char in message)
+        binaryOutput = ' '.join(format(ord(char), '08b') for char in message)
         self.resultTextBox.delete("1.0", "end")
-        self.resultTextBox.insert("1.0", binary_output)
+        self.resultTextBox.insert("1.0", binaryOutput)
 
 app = userInterface()
 app.mainloop()
