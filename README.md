@@ -74,6 +74,6 @@ I am NOT liable for any loss of data or any data landing in the wrong hands.
 
 ## Support
 
-If you encounter any issues or have any questions, please feel free to open an issue on GitHub or contact me at admin@logic-leap.net.
+If you encounter any issues or have any questions, please feel free to open an issue on GitHub or contact me at sanitycs@proton.me.
 
 Enjoy using CryptoSuite! I hope it makes your cryptography tasks easier and more enjoyable.
